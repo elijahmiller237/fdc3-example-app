@@ -11,7 +11,7 @@
     "preview": "vite preview",
     "start": "serve dist/",
     "predeploy": "npm run build",
-    "deploy": "gh-pages -d build",
+    "deploy": "gh-pages -d dist",
     "buildAndServe": "npm run build && npm start"
   },
   "dependencies": {
