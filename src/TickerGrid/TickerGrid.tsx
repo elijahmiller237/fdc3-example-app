@@ -19,7 +19,6 @@ export const TickerGrid = () => {
         columnDefs={TICKER_GRID_COL_DEFS}
         rowData={stocks}
         defaultColDef={TICKER_GRID_DEFAULT_COL_DEF}
-        onCellDoubleClicked={() => console.log("foo")}
       />
     </GridContainer>
   );

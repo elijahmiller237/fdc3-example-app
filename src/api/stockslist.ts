@@ -6,7 +6,6 @@ const STOCKS_LIST_PATH = "/stocks";
 const STOCKS_LIST_PARAMS = { exchange: "NASDAQ", format: "json" };
 
 export const fetchStocksList = async (): Promise<StockData[]> => {
-  console.log(import.meta.env);
   const response = await axios<{ data: StockData[] }>({
     method: "get",
     url: STOCKS_LIST_PATH,

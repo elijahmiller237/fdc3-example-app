@@ -5,6 +5,7 @@ import DatasetOutlinedIcon from "@mui/icons-material/DatasetOutlined";
 import NewspaperOutlinedIcon from "@mui/icons-material/NewspaperOutlined";
 import TimelineOutlinedIcon from "@mui/icons-material/TimelineOutlined";
 import styled from "@emotion/styled";
+import { useTickerOptions } from "../hooks";
 
 type TickerGridCellRendererProps = CustomCellRendererProps;
 
@@ -17,7 +18,9 @@ export const TickerGridCellRenderer = ({
     mouseY: number;
   } | null>(null);
 
-  const menuTitle = useMemo(() => data["symbol"] ?? "", [data]);
+  const { viewTickerNews } = useTickerOptions();
+
+  const ticker = useMemo(() => data["symbol"] ?? "", [data]);
 
   const handleContextMenu = useCallback((event: React.MouseEvent) => {
     event.preventDefault();
@@ -33,6 +36,11 @@ export const TickerGridCellRenderer = ({
 
   const handleClose = useCallback(() => setContextMenu(null), []);
 
+  const handleViewTickerNews = useCallback(() => {
+    viewTickerNews(ticker);
+    handleClose;
+  }, [ticker, viewTickerNews, handleClose]);
+
   return (
     <div onContextMenu={handleContextMenu}>
       {value}
@@ -46,14 +54,14 @@ export const TickerGridCellRenderer = ({
             : undefined
         }
       >
-        <MenuItem style={{ pointerEvents: "none" }}>{menuTitle}</MenuItem>
+        <MenuItem style={{ pointerEvents: "none" }}>{ticker}</MenuItem>
         <MenuItem onClick={handleClose}>
           <ListItemIcon>
             <DatasetOutlinedIcon fontSize="small" />
           </ListItemIcon>
           View Ticker Data
         </MenuItem>
-        <MenuItem onClick={handleClose}>
+        <MenuItem onClick={handleViewTickerNews}>
           <ListItemIcon>
             <NewspaperOutlinedIcon fontSize="small" />
           </ListItemIcon>

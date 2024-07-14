@@ -5,7 +5,7 @@
   "type": "module",
   "homepage": "https://elijahmiller237.github.io/fdc3-example-app",
   "scripts": {
-    "dev": "vite --port 3001",
+    "dev": "vite --port 3000",
     "build": "tsc -b && vite build",
     "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
     "preview": "vite preview",
