@@ -1,7 +1,7 @@
 {
   "name": "fdc3-example-app",
   "private": true,
-  "version": "1.0.0",
+  "version": "2.0.0",
   "type": "module",
   "homepage": "https://elijahmiller237.github.io/fdc3-example-app",
   "scripts": {
