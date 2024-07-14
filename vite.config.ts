@@ -3,6 +3,6 @@ import react from "@vitejs/plugin-react";
 
 // https://vitejs.dev/config/
 export default defineConfig({
-  base: "/fdc3-example-app/",
+  //base: "/fdc3-example-app/",
   plugins: [react()],
 });
