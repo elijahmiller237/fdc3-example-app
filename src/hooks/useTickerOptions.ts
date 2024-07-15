@@ -8,7 +8,7 @@ type UseTickerOptionsState = {
 };
 
 export const useTickerOptions = (): UseTickerOptionsState => {
-  const viewTickerData = useCallback(async (ticker: string) => {
+  const viewTickerData = useCallback(async () => {
     return;
   }, []);
 
@@ -17,7 +17,7 @@ export const useTickerOptions = (): UseTickerOptionsState => {
   }, []);
 
   const viewTickerChart = useCallback(async (ticker: string) => {
-    return;
+    await fdc3.raiseIntent("ViewChart", { type: "viewChart", id: { ticker } });
   }, []);
 
   return { viewTickerData, viewTickerNews, viewTickerChart };

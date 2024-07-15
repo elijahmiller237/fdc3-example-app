@@ -11,7 +11,7 @@ export const TickerGrid = () => {
 
   useEffect(() => {
     refresh();
-  }, []);
+  }, [refresh]);
 
   return (
     <GridContainer className="ag-theme-balham-dark">
