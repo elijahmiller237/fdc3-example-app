@@ -1,4 +1,4 @@
-import { Options, SeriesOptionsType } from "highcharts";
+import { Options, PointClickEventObject, SeriesOptionsType } from "highcharts";
 import { PriceData } from "../types";
 import { useMemo } from "react";
 
@@ -8,7 +8,9 @@ type UsePriceDataToChartOptionsState = {
 
 export const usePriceDataToChartOptions = (
   priceData: PriceData[],
-  chartTitle: string
+  chartTitle: string,
+  intraday: boolean,
+  onPointClick: (event: PointClickEventObject) => void
 ): UsePriceDataToChartOptionsState => {
   const options: Options = useMemo(() => {
     const seriesData: SeriesOptionsType = {
@@ -40,18 +42,23 @@ export const usePriceDataToChartOptions = (
       },
       plotOptions: {
         candlestick: {
-          pointWidth: 38,
+          pointWidth: intraday ? 15 : 20,
           color: "#EE4A2D",
           upColor: "#5ED273",
           lineColor: "#EE4A2D",
           upLineColor: "#5ED273",
+          point: {
+            events: {
+              click: onPointClick,
+            },
+          },
         },
       },
       credits: { enabled: false },
       title: { text: chartTitle },
       series: [seriesData],
     };
-  }, [priceData, chartTitle]);
+  }, [priceData, chartTitle, onPointClick, intraday]);
 
   return { chartOptions: options };
 };

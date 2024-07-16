@@ -2,30 +2,26 @@ import Highcharts from "highcharts";
 import HighchartsReact from "highcharts-react-official";
 import { useCallback, useEffect, useState } from "react";
 import { usePriceData, usePriceDataToChartOptions } from "../hooks";
-import { addIntentListener, fdc3Ready, raiseIntent } from "@finos/fdc3";
 
-export const ChartView = () => {
+import { addIntentListener, fdc3Ready } from "@finos/fdc3";
+
+export const IntradayChartView = () => {
   const [currentTicker, setCurrentTicker] = useState("AAPL");
 
   const { prices, refresh } = usePriceData();
 
-  const handlePointSelect = useCallback(async () => {
-    await raiseIntent("ViewIntradayChart", {
-      type: "viewIntradayChart",
-      id: { ticker: currentTicker },
-    });
-  }, [currentTicker]);
-
   const { chartOptions } = usePriceDataToChartOptions(
     prices,
-    `Prices for ${currentTicker}`,
-    false,
-    handlePointSelect
+    `Intraday Prices for ${currentTicker}`,
+    true,
+    () => {
+      return;
+    }
   );
 
   const setup = useCallback(async () => {
     await fdc3Ready;
-    const listener = await addIntentListener("ViewChart", (ctx) => {
+    const listener = await addIntentListener("ViewIntradayChart", (ctx) => {
       setCurrentTicker(ctx.id?.ticker ?? "AAPL");
     });
 
@@ -41,7 +37,7 @@ export const ChartView = () => {
   }, [setup]);
 
   useEffect(() => {
-    refresh(currentTicker, false);
+    refresh(currentTicker, true);
   }, [refresh, currentTicker]);
 
   return (
