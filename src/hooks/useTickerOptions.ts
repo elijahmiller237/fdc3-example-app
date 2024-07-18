@@ -1,4 +1,4 @@
-import * as fdc3 from "@finos/fdc3";
+import { raiseIntent, getOrCreateChannel } from "@finos/fdc3";
 import { useCallback } from "react";
 
 type UseTickerOptionsState = {
@@ -13,11 +13,11 @@ export const useTickerOptions = (): UseTickerOptionsState => {
   }, []);
 
   const viewTickerNews = useCallback(async (ticker: string) => {
-    await fdc3.raiseIntent("ViewNews", { type: "viewNews", id: { ticker } });
+    await raiseIntent("ViewNews", { type: "viewNews", id: { ticker } });
   }, []);
 
   const viewTickerChart = useCallback(async (ticker: string) => {
-    await fdc3.raiseIntent("ViewChart", { type: "viewChart", id: { ticker } });
+    await raiseIntent("ViewChart", { type: "viewChart", id: { ticker } });
   }, []);
 
   return { viewTickerData, viewTickerNews, viewTickerChart };

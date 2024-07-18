@@ -3,7 +3,7 @@ import HighchartsReact from "highcharts-react-official";
 import { useCallback, useEffect, useState } from "react";
 import { usePriceData, usePriceDataToChartOptions } from "../hooks";
 
-import { addIntentListener, fdc3Ready } from "@finos/fdc3";
+import { addIntentListener, fdc3Ready, getOrCreateChannel } from "@finos/fdc3";
 
 export const IntradayChartView = () => {
   const [currentTicker, setCurrentTicker] = useState("AAPL");
@@ -21,11 +21,24 @@ export const IntradayChartView = () => {
 
   const setup = useCallback(async () => {
     await fdc3Ready;
-    const listener = await addIntentListener("ViewIntradayChart", (ctx) => {
-      setCurrentTicker(ctx.id?.ticker ?? "AAPL");
-    });
+    const intentListener = await addIntentListener(
+      "ViewIntradayChart",
+      (ctx) => {
+        setCurrentTicker(ctx.id?.ticker ?? "AAPL");
+      }
+    );
+    const channel = await getOrCreateChannel("currentTicker");
+    const contextListener = await channel.addContextListener(
+      "changeTicker",
+      (ctx) => {
+        setCurrentTicker(ctx.id?.ticker ?? "AAPL");
+      }
+    );
 
-    return () => listener.unsubscribe();
+    return () => {
+      intentListener.unsubscribe();
+      contextListener.unsubscribe();
+    };
   }, []);
 
   useEffect(() => {
