@@ -18,7 +18,8 @@ export const TickerGridCellRenderer = ({
     mouseY: number;
   } | null>(null);
 
-  const { viewTickerNews, viewTickerChart } = useTickerOptions();
+  const { viewTickerNews, viewTickerChart, viewTickerData } =
+    useTickerOptions();
 
   const ticker = useMemo(() => data["symbol"] ?? "", [data]);
 
@@ -46,6 +47,11 @@ export const TickerGridCellRenderer = ({
     handleClose();
   }, [ticker, viewTickerChart, handleClose]);
 
+  const handleViewTickerData = useCallback(() => {
+    viewTickerData(ticker);
+    handleClose();
+  }, [ticker, viewTickerData, handleClose]);
+
   return (
     <div onContextMenu={handleContextMenu}>
       {value}
@@ -60,7 +66,7 @@ export const TickerGridCellRenderer = ({
         }
       >
         <MenuItem style={{ pointerEvents: "none" }}>{ticker}</MenuItem>
-        <MenuItem onClick={handleClose}>
+        <MenuItem onClick={handleViewTickerData}>
           <ListItemIcon>
             <DatasetOutlinedIcon fontSize="small" />
           </ListItemIcon>

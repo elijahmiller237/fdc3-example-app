@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useMemo, useState } from "react";
-import { addIntentListener, fdc3Ready } from "@finos/fdc3";
+import { addIntentListener, fdc3Ready, getOrCreateChannel } from "@finos/fdc3";
 import { useStockNews } from "../hooks";
 import { StockNewsItem } from "./StockNewsItem";
 import styled from "@emotion/styled";
@@ -17,11 +17,21 @@ export const NewsView = () => {
 
   const setup = useCallback(async () => {
     await fdc3Ready;
-    const listener = await addIntentListener("ViewNews", (ctx) => {
+    const intentListener = await addIntentListener("ViewNews", (ctx) => {
       setCurrentTicker(ctx.id?.ticker ?? "AAPL");
     });
+    const channel = await getOrCreateChannel("currentTicker");
+    const contextListener = await channel.addContextListener(
+      "changeTicker",
+      (ctx) => {
+        setCurrentTicker(ctx.id?.ticker ?? "AAPL");
+      }
+    );
 
-    return () => listener.unsubscribe();
+    return () => {
+      intentListener.unsubscribe();
+      contextListener.unsubscribe();
+    };
   }, []);
 
   useEffect(() => {
