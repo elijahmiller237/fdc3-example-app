@@ -1,4 +1,4 @@
-import { raiseIntent, getOrCreateChannel } from "@finos/fdc3";
+import { raiseIntent } from "@finos/fdc3";
 import { useCallback } from "react";
 
 type UseTickerOptionsState = {
@@ -8,8 +8,8 @@ type UseTickerOptionsState = {
 };
 
 export const useTickerOptions = (): UseTickerOptionsState => {
-  const viewTickerData = useCallback(async () => {
-    return;
+  const viewTickerData = useCallback(async (ticker: string) => {
+    await raiseIntent("ViewProfile", { type: "viewProfile", id: { ticker } });
   }, []);
 
   const viewTickerNews = useCallback(async (ticker: string) => {

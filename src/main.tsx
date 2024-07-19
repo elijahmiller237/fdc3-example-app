@@ -10,6 +10,7 @@ import { ChartView } from "./ChartView";
 import { IntradayChartView } from "./IntradayChartView";
 import applyTheme from "highcharts/themes/high-contrast-dark";
 import stock from "highcharts/modules/stock";
+import { ProfileView } from "./ProfileView";
 
 applyTheme(Highcharts);
 stock(Highcharts);
@@ -20,6 +21,7 @@ const router = createBrowserRouter([
   { path: "/news-view", element: <NewsView /> },
   { path: "/chart-view", element: <ChartView /> },
   { path: "/intraday-chart-view", element: <IntradayChartView /> },
+  { path: "/profile-view", element: <ProfileView /> },
 ]);
 
 ReactDOM.createRoot(document.getElementById("root")!).render(

@@ -30,4 +30,5 @@ export const TICKER_GRID_COL_DEFS: ColDef[] = [
 
 export const TICKER_GRID_DEFAULT_COL_DEF: ColDef = {
   cellRenderer: TickerGridCellRenderer,
+  filter: true,
 };
