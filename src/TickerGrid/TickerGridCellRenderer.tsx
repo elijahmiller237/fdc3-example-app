@@ -18,7 +18,7 @@ export const TickerGridCellRenderer = ({
     mouseY: number;
   } | null>(null);
 
-  const { viewTickerNews } = useTickerOptions();
+  const { viewTickerNews, viewTickerChart } = useTickerOptions();
 
   const ticker = useMemo(() => data["symbol"] ?? "", [data]);
 
@@ -38,8 +38,13 @@ export const TickerGridCellRenderer = ({
 
   const handleViewTickerNews = useCallback(() => {
     viewTickerNews(ticker);
-    handleClose;
+    handleClose();
   }, [ticker, viewTickerNews, handleClose]);
+
+  const handleViewTickerChart = useCallback(() => {
+    viewTickerChart(ticker);
+    handleClose();
+  }, [ticker, viewTickerChart, handleClose]);
 
   return (
     <div onContextMenu={handleContextMenu}>
@@ -67,7 +72,7 @@ export const TickerGridCellRenderer = ({
           </ListItemIcon>
           View Ticker News
         </MenuItem>
-        <MenuItem onClick={handleClose}>
+        <MenuItem onClick={handleViewTickerChart}>
           <ListItemIcon>
             <TimelineOutlinedIcon fontSize="small" />
           </ListItemIcon>
