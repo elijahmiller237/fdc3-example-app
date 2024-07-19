@@ -11,6 +11,7 @@ import { IntradayChartView } from "./IntradayChartView";
 import applyTheme from "highcharts/themes/high-contrast-dark";
 import stock from "highcharts/modules/stock";
 import { ProfileView } from "./ProfileView";
+import { ChannelView } from "./ChannelView";
 
 applyTheme(Highcharts);
 stock(Highcharts);
@@ -22,6 +23,8 @@ const router = createBrowserRouter([
   { path: "/chart-view", element: <ChartView /> },
   { path: "/intraday-chart-view", element: <IntradayChartView /> },
   { path: "/profile-view", element: <ProfileView /> },
+  { path: "/channel-view-1", element: <ChannelView title="Channel View 1" /> },
+  { path: "/channel-view-2", element: <ChannelView title="Channel View 2" /> },
 ]);
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
