@@ -10,7 +10,7 @@ import {
 } from "@finos/fdc3";
 
 export const ChartView = () => {
-  const [currentTicker, setCurrentTicker] = useState("AAPL");
+  const [currentTicker /* , setCurrentTicker */] = useState("AAPL");
 
   const { prices, refresh } = usePriceData();
 
@@ -28,7 +28,7 @@ export const ChartView = () => {
     handlePointSelect
   );
 
-  const setup = useCallback(async () => {
+  /* const setup = useCallback(async () => {
     await fdc3Ready;
     const intentListener = await addIntentListener("ViewChart", (ctx) => {
       setCurrentTicker(ctx.id?.ticker ?? "AAPL");
@@ -53,7 +53,7 @@ export const ChartView = () => {
     return () => {
       cleanup.then((cleanupFn) => cleanupFn());
     };
-  }, [setup]);
+  }, [setup]); */
 
   useEffect(() => {
     refresh(currentTicker, false);
@@ -62,7 +62,7 @@ export const ChartView = () => {
   return (
     <HighchartsReact
       containerProps={{
-        style: { height: "94%", width: "99%" },
+        style: { height: "100%", width: "100%" },
         className: "highcharts-dark",
         padding: "0px",
       }}

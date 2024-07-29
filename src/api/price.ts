@@ -1,5 +1,6 @@
 import axios from "axios";
 import { IntradayPriceData, PriceData } from "../types";
+import { examplePriceData } from "../example-prices";
 
 const dailyPricesUrl = "https://twelve-data1.p.rapidapi.com";
 const DAILY_PRICES_PATH = "/time_series";
@@ -12,7 +13,7 @@ const DAILY_PRICES_PARAMS = {
 export const fetchDailyPriceData = async (
   ticker: string
 ): Promise<PriceData[]> => {
-  const response = await axios<{
+  /* const response = await axios<{
     meta: Record<string, string>;
     values: PriceData[];
     status: string;
@@ -27,7 +28,8 @@ export const fetchDailyPriceData = async (
     },
   });
 
-  return response.data.values;
+  return response.data.values; */
+  return examplePriceData.values;
 };
 
 const intradayPricesUrl = "https://apistocks.p.rapidapi.com";
