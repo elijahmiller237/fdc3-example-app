@@ -8,9 +8,10 @@ import {
   raiseIntent,
   getOrCreateChannel,
 } from "@finos/fdc3";
+import { guid } from "../FDCThreeli/utils";
 
 export const ChartView = () => {
-  const [currentTicker /* , setCurrentTicker */] = useState("AAPL");
+  const [currentTicker, setCurrentTicker] = useState("AAPL");
 
   const { prices, refresh } = usePriceData();
 
@@ -28,22 +29,23 @@ export const ChartView = () => {
     handlePointSelect
   );
 
-  /* const setup = useCallback(async () => {
-    await fdc3Ready;
+  const setup = useCallback(async () => {
+    await fdc3Ready();
     const intentListener = await addIntentListener("ViewChart", (ctx) => {
+      console.log("received intent", ctx);
       setCurrentTicker(ctx.id?.ticker ?? "AAPL");
     });
-    const channel = await getOrCreateChannel("currentTicker");
+    /* const channel = await getOrCreateChannel("currentTicker");
     const contextListener = await channel.addContextListener(
       "changeTicker",
       (ctx) => {
         setCurrentTicker(ctx.id?.ticker ?? "AAPL");
       }
-    );
+    ); */
 
     return () => {
       intentListener.unsubscribe();
-      contextListener.unsubscribe();
+      //contextListener.unsubscribe();
     };
   }, []);
 
@@ -53,7 +55,7 @@ export const ChartView = () => {
     return () => {
       cleanup.then((cleanupFn) => cleanupFn());
     };
-  }, [setup]); */
+  }, [setup]);
 
   useEffect(() => {
     refresh(currentTicker, false);

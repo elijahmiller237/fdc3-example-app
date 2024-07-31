@@ -25,7 +25,6 @@ export const TickerGrid = () => {
   );
 
   useEffect(() => {
-    window.postMessage("foo");
     refresh();
   }, [refresh]);
 

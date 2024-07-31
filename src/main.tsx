@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import ReactDOM from "react-dom/client";
 import "./index.css";
 import Highcharts from "highcharts";
@@ -12,6 +12,7 @@ import applyTheme from "highcharts/themes/high-contrast-dark";
 import stock from "highcharts/modules/stock";
 import { ProfileView } from "./ProfileView";
 import { ChannelView } from "./ChannelView";
+import { init } from "./FDCThreeli/api";
 
 applyTheme(Highcharts);
 stock(Highcharts);
@@ -27,8 +28,14 @@ const router = createBrowserRouter([
   { path: "/channel-view-2", element: <ChannelView title="Channel View 2" /> },
 ]);
 
-ReactDOM.createRoot(document.getElementById("root")!).render(
-  <React.StrictMode>
-    <RouterProvider router={router} />
-  </React.StrictMode>
-);
+const RootComp = () => {
+  useEffect(() => init(), []);
+
+  return (
+    <React.StrictMode>
+      <RouterProvider router={router} />
+    </React.StrictMode>
+  );
+};
+
+ReactDOM.createRoot(document.getElementById("root")!).render(<RootComp />);

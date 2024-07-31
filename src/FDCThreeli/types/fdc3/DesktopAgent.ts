@@ -3,10 +3,10 @@ import { AppIdentifier } from "./AppIdentifier";
 // import { AppMetadata } from "./AppMetadata";
 // import { Channel } from "./Channel";
 import { Context } from "./Context";
+import { IntentHandler } from "./IntentHandler";
 // import { ContextHandler } from "./ContextHandler";
-// import { IntentHandler } from "./IntentHandler";
-// import { IntentResolution } from "./IntentResolution";
-// import { Listener } from "./Listener";
+import { IntentResolution } from "./IntentResolution";
+import { Listener } from "./Listener";
 // import { PrivateChannel } from "./PrivateChannel";
 
 export interface DesktopAgent {
@@ -73,11 +73,11 @@ export interface DesktopAgent {
    * Raises a specific intent for resolution against apps registered with the desktop agent.
    */
 
-  /* raiseIntent(
+  raiseIntent(
     intent: string,
     context: Context,
     app?: AppIdentifier
-  ): Promise<IntentResolution>; */
+  ): Promise<IntentResolution>;
 
   /**
    * Finds and raises an intent against apps registered with the desktop agent based purely on the type of the context data.
@@ -90,7 +90,7 @@ export interface DesktopAgent {
   /**
    * Adds a listener for incoming intents raised by other applications, via calls to fdc3.raiseIntent or fdc3.raiseIntentForContext.
    */
-  /* addIntentListener(intent: string, handler: IntentHandler): Promise<Listener>; */
+  addIntentListener(intent: string, handler: IntentHandler): Promise<Listener>;
 
   // channels
 

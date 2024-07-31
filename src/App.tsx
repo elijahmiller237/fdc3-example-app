@@ -1,18 +1,13 @@
-import { useEffect } from "react";
 import "./App.css";
-import { init } from "./FDCThreeli/api";
-import { open } from "@finos/fdc3";
+import { raiseIntent } from "@finos/fdc3";
+import { guid } from "./FDCThreeli/utils";
 
 function App() {
-  useEffect(() => {
-    init();
-  }, []);
-
   return (
     <div>
       <button
         onClick={() => {
-          open({ appId: "chart-view" }).then((id) => console.log(id));
+          raiseIntent("ViewChart", { type: "foo", id: { ticker: guid() } });
         }}
       >
         post
