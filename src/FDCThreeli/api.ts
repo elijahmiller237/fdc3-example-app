@@ -1,6 +1,8 @@
 import {
   AppIdentifier,
+  Channel,
   Context,
+  ContextHandler,
   FDC3MessageDetail,
   FDC3MessageHandler,
   IntentHandler,
@@ -15,6 +17,8 @@ const _returnMessageHandlers = new Map<string, FDC3MessageHandler>();
 const _intentHandlers = new Map<string, Map<string, IntentHandler>>();
 
 const _seenMessages = new Set<string>();
+
+const _contextHandlers = new Map<string, Map<string, ContextHandler>>();
 
 const MESSAGE_TTL_MS = 30000;
 
@@ -65,6 +69,13 @@ const handleMessage = (event: MessageEvent) => {
     _intentHandlers
       .get(event.data.payload.intent)
       ?.forEach((handler) => handler(event.data.payload.context));
+  } else if (
+    event.data.type === "broadcast" &&
+    _contextHandlers.has(event.data.payload.channelId)
+  ) {
+    _contextHandlers
+      .get(event.data.payload.channelId)
+      ?.forEach((handler) => handler(event.data.payload.context));
   }
 };
 
@@ -102,6 +113,35 @@ class DesktopAgent implements fdc3DesktopAgent {
     app?: AppIdentifier
   ): Promise<IntentResolution> {
     return wireMethod("raiseIntent", { intent, context, app });
+  }
+
+  async getOrCreateChannel(channelId: string): Promise<Channel> {
+    const res = await wireMethod("getOrCreateChannel", { channelId });
+    if (!_contextHandlers.has(channelId)) {
+      _contextHandlers.set(channelId, new Map<string, ContextHandler>());
+    }
+
+    return {
+      id: res.id,
+      type: "app",
+      addContextListener: async (contextType, handler) => {
+        const handlerId = guid();
+        _contextHandlers.get(channelId)?.set(handlerId, handler);
+        return {
+          unsubscribe: () => {
+            if (_contextHandlers.has(channelId)) {
+              _contextHandlers.get(channelId)?.delete(handlerId);
+            }
+          },
+        };
+      },
+      broadcast: async (context) => {
+        return wireMethod("broadcast", { channelId, context });
+      },
+      getCurrentContext: async () => {
+        return null;
+      },
+    };
   }
 }
 

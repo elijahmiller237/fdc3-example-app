@@ -35,17 +35,17 @@ export const ChartView = () => {
       console.log("received intent", ctx);
       setCurrentTicker(ctx.id?.ticker ?? "AAPL");
     });
-    /* const channel = await getOrCreateChannel("currentTicker");
+    const channel = await getOrCreateChannel("currentTicker");
     const contextListener = await channel.addContextListener(
       "changeTicker",
       (ctx) => {
         setCurrentTicker(ctx.id?.ticker ?? "AAPL");
       }
-    ); */
+    );
 
     return () => {
       intentListener.unsubscribe();
-      //contextListener.unsubscribe();
+      contextListener.unsubscribe();
     };
   }, []);
 

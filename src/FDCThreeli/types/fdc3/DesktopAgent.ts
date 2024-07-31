@@ -1,7 +1,7 @@
 import { AppIdentifier } from "./AppIdentifier";
 // import { AppIntent } from "./AppIntent";
 // import { AppMetadata } from "./AppMetadata";
-// import { Channel } from "./Channel";
+import { Channel } from "./Channel";
 import { Context } from "./Context";
 import { IntentHandler } from "./IntentHandler";
 // import { ContextHandler } from "./ContextHandler";
@@ -97,7 +97,7 @@ export interface DesktopAgent {
   /**
    * Returns a Channel object for the specified channel, creating it (as an App channel) if it does not exist.
    */
-  /* getOrCreateChannel(channelId: string): Promise<Channel>; */
+  getOrCreateChannel(channelId: string): Promise<Channel>;
 
   /**
    * Returns a Channel with an auto-generated identity that is intended for private communication between applications. Primarily used to

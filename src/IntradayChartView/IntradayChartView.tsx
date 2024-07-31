@@ -56,7 +56,7 @@ export const IntradayChartView = () => {
   return (
     <HighchartsReact
       containerProps={{
-        style: { height: "94%", width: "99%" },
+        style: { height: "100%", width: "100%" },
         className: "highcharts-dark",
         padding: "0px",
       }}
