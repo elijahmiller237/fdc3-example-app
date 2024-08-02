@@ -4,6 +4,5 @@ export type FDC3MessageDetail = {
   id: string;
   type: string;
   ts: number;
-  method?: string;
   payload: any;
 };

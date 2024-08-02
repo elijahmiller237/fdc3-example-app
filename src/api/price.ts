@@ -1,6 +1,6 @@
 import axios from "axios";
 import { IntradayPriceData, PriceData } from "../types";
-import { examplePriceData } from "../example-prices";
+import { exampleIntradayPriceData, examplePriceData } from "../example-data";
 
 const dailyPricesUrl = "https://twelve-data1.p.rapidapi.com";
 const DAILY_PRICES_PATH = "/time_series";
@@ -42,7 +42,7 @@ const INTRADAY_PRICES_PARAMS = {
 export const fetchIntradayPriceData = async (
   ticker: string
 ): Promise<PriceData[]> => {
-  const response = await axios<{
+  /* const response = await axios<{
     Metadata: Record<string, string>;
     Results: IntradayPriceData[];
   }>({
@@ -54,14 +54,22 @@ export const fetchIntradayPriceData = async (
       "X-Rapidapi-Host": "apistocks.p.rapidapi.com",
       "X-Rapidapi-Key": import.meta.env.VITE_RAPID_API_KEY ?? "",
     },
-  });
+  }); */
 
-  return response.data.Results.map((priceItem) => ({
+  /* return response.data.Results.map((priceItem) => ({
     datetime: priceItem.Date,
-    open: priceItem.Open,
-    close: priceItem.Close,
-    high: priceItem.High,
-    low: priceItem.Low,
-    volume: priceItem.Volume,
+    open: priceItem.Open.toString(),
+    close: priceItem.Close.toString(),
+    high: priceItem.High.toString(),
+    low: priceItem.Low.toString(),
+    volume: priceItem.Volume.toString(),
+  })); */
+  return exampleIntradayPriceData.Results.map((priceItem) => ({
+    datetime: priceItem.Date,
+    open: priceItem.Open.toString(),
+    close: priceItem.Close.toString(),
+    high: priceItem.High.toString(),
+    low: priceItem.Low.toString(),
+    volume: priceItem.Volume.toString(),
   }));
 };

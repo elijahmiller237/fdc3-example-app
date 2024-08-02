@@ -1,12 +1,13 @@
 import axios from "axios";
 import { StockData } from "../types";
+import { exampleStockData } from "../example-data";
 
 const url = "https://twelve-data1.p.rapidapi.com";
 const STOCKS_LIST_PATH = "/stocks";
 const STOCKS_LIST_PARAMS = { exchange: "NASDAQ", format: "json" };
 
 export const fetchStocksList = async (): Promise<StockData[]> => {
-  const response = await axios<{ data: StockData[] }>({
+  /* const response = await axios<{ data: StockData[] }>({
     method: "get",
     url: STOCKS_LIST_PATH,
     baseURL: url,
@@ -17,5 +18,6 @@ export const fetchStocksList = async (): Promise<StockData[]> => {
     },
   });
 
-  return response.data.data;
+  return response.data.data; */
+  return exampleStockData.data;
 };

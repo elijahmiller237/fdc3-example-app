@@ -22,19 +22,14 @@ const _contextHandlers = new Map<string, Map<string, ContextHandler>>();
 
 const MESSAGE_TTL_MS = 30000;
 
-const wireMethod = (
-  method: string,
-  payload: any,
-  config?: any
-): Promise<any> => {
+const wireMethod = (method: string, payload: any): Promise<any> => {
   const ts: number = new Date().getTime();
   const _guid = guid();
   const messageId = `${method}_${_guid}`;
   const messageDetail: FDC3MessageDetail = {
     id: messageId,
     type: "method",
-    method,
-    payload,
+    payload: { ...payload, method },
     ts,
   };
   return new Promise((resolve) => {
@@ -42,7 +37,7 @@ const wireMethod = (
       resolve(data.payload);
     };
     _returnMessageHandlers.set(`FDC3:return_${messageId}`, handler);
-    window.parent.postMessage(messageDetail, "*");
+    window.top?.postMessage(messageDetail, "*");
   });
 };
 
@@ -66,6 +61,7 @@ const handleMessage = (event: MessageEvent) => {
     event.data.type === "intent" &&
     _intentHandlers.has(event.data.payload.intent)
   ) {
+    console.log("recieved intent message", window);
     _intentHandlers
       .get(event.data.payload.intent)
       ?.forEach((handler) => handler(event.data.payload.context));
@@ -73,6 +69,7 @@ const handleMessage = (event: MessageEvent) => {
     event.data.type === "broadcast" &&
     _contextHandlers.has(event.data.payload.channelId)
   ) {
+    console.log("recieved broadcast message", window);
     _contextHandlers
       .get(event.data.payload.channelId)
       ?.forEach((handler) => handler(event.data.payload.context));

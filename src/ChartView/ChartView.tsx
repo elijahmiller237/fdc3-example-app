@@ -31,6 +31,7 @@ export const ChartView = () => {
 
   const setup = useCallback(async () => {
     await fdc3Ready();
+    console.log("adding ViewChart intent lister");
     const intentListener = await addIntentListener("ViewChart", (ctx) => {
       console.log("received intent", ctx);
       setCurrentTicker(ctx.id?.ticker ?? "AAPL");

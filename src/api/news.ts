@@ -1,6 +1,6 @@
 import axios from "axios";
 import { NewsItem } from "../types";
-import { exampleNews } from "../example-news";
+import { exampleNews } from "../example-data";
 
 const url = "https://yahoo-finance160.p.rapidapi.com";
 const STOCK_NEWS_PATH = "/stocknews";

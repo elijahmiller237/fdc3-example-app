@@ -1,5 +1,6 @@
 import axios from "axios";
 import { ProfileData } from "../types";
+import { exampleProfileData } from "../example-data";
 
 const url = "https://twelve-data1.p.rapidapi.com";
 const PROFILE_PATH = "/profile";
@@ -7,7 +8,7 @@ const PROFILE_PATH = "/profile";
 export const fetchProfileData = async (
   ticker: string
 ): Promise<ProfileData> => {
-  const response = await axios<ProfileData>({
+  /* const response = await axios<ProfileData>({
     method: "get",
     url: PROFILE_PATH,
     baseURL: url,
@@ -18,5 +19,6 @@ export const fetchProfileData = async (
     },
   });
 
-  return response.data;
+  return response.data; */
+  return exampleProfileData;
 };

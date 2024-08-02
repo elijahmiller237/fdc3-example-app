@@ -9,9 +9,9 @@ export type PriceData = {
 
 export type IntradayPriceData = {
   Date: string;
-  Open: string;
-  Close: string;
-  High: string;
-  Low: string;
-  Volume: string;
+  Open: number;
+  Close: number;
+  High: number;
+  Low: number;
+  Volume: number;
 };
